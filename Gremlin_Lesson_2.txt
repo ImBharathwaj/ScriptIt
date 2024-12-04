@@ -1,0 +1,32 @@
+// Create an empty graph databases
+graph = TinkerGraph.open()
+
+// Create the traversal source
+g = graph.traversal()
+
+// Create the "person" vertex and assign it to "v1"
+v1 = g.addV('person')\
+      .property(T.id, 1)\
+      .property('name', 'marco')\
+      .property('age', 29)\
+      .next()
+
+// Create the "software" vertex and assign it to "v2"
+v2 = g.addV('software')\
+      .property(T.id, 3)\
+      .property('name', 'lop')\
+      .property('lang', 'java')\
+      .next()
+
+// Create the "created" edge from "v1" to "v2"
+g.addE('created')\
+    .from(v1)\
+    .to(v2)\
+    .property(T.id, 9)\
+    .property('weight', 0.4)
+
+// Get the software created by 'marco'
+g.V()\
+ .has('person', 'name', 'marco')\
+ .out()\
+ .values('name')
